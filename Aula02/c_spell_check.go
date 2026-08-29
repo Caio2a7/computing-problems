@@ -10,7 +10,6 @@ func main(){
 	var testCases int 
 	var fullName string = "Timur"
 	fmt.Scan(&testCases)
-	fmt.Printf("TestCases: %d", testCases)
 	
 	var nameLength int
 	var name string
@@ -21,8 +20,16 @@ func main(){
 	results := make([]string, testCases)
 	for i := range testCases {
 		fmt.Scan(&nameLength, &name)
-		fmt.Printf("\nTamanho string: %d - Sring: %s", nameLength, name)
 		for j := range nameLength {
+			if !strings.Contains(fullName, string(name[j])) {
+				results[i] = "NO"
+			}
+			if strings.Count(name, string(name[j])) > 1{
+				isRepeted[i] = true
+			}
+			if nameLength != len(fullName) {
+				results[i] = "NO"
+			}
 			if string(name[j]) == "T" {
 				if hasUpperT[i] {
 					hasUpper[i] = true
@@ -33,19 +40,16 @@ func main(){
 				if strings.Contains(fullName, string(name[j])) != true{
 					isDifferent[i] = true
 				}
-				if strings.Count(fullName, string(name[j])) > 1{
-					isRepeted[i] = true
-				}
 				hasUpper[i] = true
 			}
 		}
-		if hasUpperT[i] == true && hasUpper[i] == false && isDifferent[i] == false && isRepeted[i] == false{
+		if results[i] != "NO" && hasUpperT[i] == true && hasUpper[i] == false && isDifferent[i] == false && isRepeted[i] == false{
 			results[i] = "YES"
 		} else{
 			results[i] = "NO"
 		}
 	}
 	for _, result := range results{
-		fmt.Printf("\n%s", result)
+		fmt.Printf("%s\n", result)
 	}
 }
